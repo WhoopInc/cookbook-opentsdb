@@ -9,19 +9,7 @@ Vagrant.configure("2") do |config|
       chef.run_list = [
           "recipe[opentsdb::default]"
       ]
-      chef.log_level = :debug
-    end
-  end
-
-  config.vm.define 'test' do |test|
-    test.vm.box = 'precise-cloud64'
-    test.vm.box_url = 'http://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box'
-    test.vm.hostname = 'opentsdbstandalone.dev.whoopdev.com'
-    test.vm.network :public_network
-
-    test.vm.provision :chef_solo do |chef|
-      chef.run_list = []
-      chef.log_level = :debug
+      chef.log_level = :info
     end
   end
 
