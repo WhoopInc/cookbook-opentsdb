@@ -11,6 +11,11 @@ dpkg_package 'opentsdb' do
   source '/tmp/opentsdb.deb'
 end
 
+template '/etc/opentsdb/opentsdb.conf' do
+  action :create
+  source 'opentsdb.conf.erb'
+end
+
 user 'opentsdb' do
   action :manage
   shell '/bin/bash'
