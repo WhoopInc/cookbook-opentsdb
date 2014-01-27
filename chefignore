@@ -73,6 +73,9 @@ Berksfile
 Berksfile.lock
 cookbooks/*
 tmp
+Gemfile
+Gemfile.lock
+.ruby-version
 
 # Cookbooks #
 #############
