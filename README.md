@@ -1,13 +1,2 @@
-# opentsdb cookbook
-
-# Requirements
-
-# Usage
-
-# Attributes
-
-# Recipes
-
-# Author
-
-Author:: whoop, Inc. (<benesch@whoop.com>)
+See [**WhoopInc/cookbook-whoop-web**][/WhoopInc/cookbook-whoop-web] for
+instructions.

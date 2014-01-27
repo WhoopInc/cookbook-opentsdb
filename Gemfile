@@ -1,3 +1,10 @@
 source 'https://rubygems.org'
 
-gem 'berkshelf'
+gem 'berkshelf', github: 'berkshelf/berkshelf'
+gem 'chef', '~> 11.8.2'
+gem 'json', '<= 1.7.7'
+gem 'rake', '~> 10.1.1'
+gem 'vagrant', github: 'mitchellh/vagrant', tag: 'v1.4.3'
+gem 'vagrant-berkshelf', github: 'berkshelf/vagrant-berkshelf'
+gem 'vagrant-vbguest', '~> 0.10.0'
+gem 'vagrant-omnibus', github: 'schisamo/vagrant-omnibus'
