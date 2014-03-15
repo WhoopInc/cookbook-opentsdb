@@ -2,7 +2,7 @@ node.set['java']['oracle']['accept_oracle_download_terms'] = true
 
 include_recipe 'java::oracle'
 
-ENV['JAVA_HOME'] = node[:java][:java_home]
+ENV['JAVA_HOME'] = node['java']['java_home']
 ENV['HBASE_HOME'] = '/usr/lib/hbase'
 
 ruby_block 'add env vars to etc/environment' do
