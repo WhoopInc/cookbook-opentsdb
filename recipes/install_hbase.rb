@@ -32,5 +32,5 @@ end
 
 service 'hbase-master' do
   action :start
-  supports status: true, restart: true
+  supports :status => true, :restart => true
 end

@@ -2,7 +2,7 @@ package 'gnuplot'
 
 cookbook_file 'opentsdb-2.0.0.deb' do
   action :create
-  path "/tmp/opentsdb.deb"
+  path '/tmp/opentsdb.deb'
 end
 
 dpkg_package 'opentsdb' do
@@ -26,10 +26,10 @@ link '/usr/local/bin/tsdb' do
 end
 
 execute 'sh /usr/share/opentsdb/bin/create_table.sh' do
-  #TODO: add notif
+  # TODO: add not_if
 end
 
 service 'opentsdb' do
   action :start
-  supports status: true, restart: true
+  supports :status => true, :restart => true
 end

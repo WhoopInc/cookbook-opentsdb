@@ -1,5 +1,6 @@
-apt_repository "cloudera_cdh" do
-  distro       = node['apt']['cloudera']['force_distro'] || node['lsb']['codename']
+distro = node['apt']['cloudera']['force_distro'] || node['lsb']['codename']
+
+apt_repository 'cloudera_cdh' do
   uri          "http://archive.cloudera.com/cdh4/ubuntu/#{distro}/amd64/cdh"
   distribution "#{distro}-cdh4"
   components   ['contrib']
@@ -9,8 +10,7 @@ apt_repository "cloudera_cdh" do
   action       :add
 end
 
-apt_repository "cloudera_gplextras" do
-  distro       = node['apt']['cloudera']['force_distro'] || node['lsb']['codename']
+apt_repository 'cloudera_gplextras' do
   uri          "http://archive.cloudera.com/gplextras/ubuntu/#{distro}/amd64/gplextras/"
   distribution "#{node['lsb']['codename']}-gplextras4"
   components   ['contrib']
