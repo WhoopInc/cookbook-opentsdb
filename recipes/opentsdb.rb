@@ -1,3 +1,5 @@
+include_recipe 'opentsdb::java'
+
 package 'gnuplot'
 
 cookbook_file 'opentsdb-2.0.0.deb' do

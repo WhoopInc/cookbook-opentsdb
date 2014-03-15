@@ -1,3 +1,5 @@
+include_recipe 'opentsdb::java'
+
 distro = node['lsb']['codename']
 
 apt_repository 'cloudera_cdh' do
