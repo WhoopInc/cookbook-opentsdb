@@ -9,4 +9,4 @@ version          '0.2.1'
 supports 'ubuntu', '= 12.04'
 
 depends 'apt',  '~> 2.3.0'
-depends 'java', '~> 1.14.0'
+depends 'java', '~> 1.21.0'
