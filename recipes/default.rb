@@ -17,6 +17,5 @@ ruby_block 'add env vars to etc/environment' do
   end
 end
 
-include_recipe 'opentsdb::add_cloudera_repo'
 include_recipe 'opentsdb::hbase'
 include_recipe 'opentsdb::opentsdb'
