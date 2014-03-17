@@ -12,6 +12,10 @@ apt_repository 'cloudera_cdh' do
   action       :add
 end
 
+%w(hbase hbase-master).each do |name|
+  package name
+end
+
 apt_repository 'cloudera_gplextras' do
   uri          "http://archive.cloudera.com/gplextras/ubuntu/#{distro}/amd64/gplextras/"
   distribution "#{node['lsb']['codename']}-gplextras4"
@@ -20,38 +24,39 @@ apt_repository 'cloudera_gplextras' do
   arch         'amd64'
   deb_src      true
   action       :add
+  only_if      { node['hbase']['lzo_compression'] }
 end
 
-package 'lzop'
-package 'hadoop-lzo-cdh4'
-package 'hbase'
-package 'hbase-master'
-
-directory '/hbase' do
-  owner 'hbase'
-  group 'hbase'
-  mode 0775
+%w(lzop hadoop-lzo-cdh4).each do |name|
+  package name do
+    only_if { node['hbase']['lzo_compression'] }
+  end
 end
 
-template '/etc/hadoop/conf/core-site.xml' do
-  action :create
-  source 'core-site.xml.erb'
+directory node['hbase']['root_dir'] do
+  owner    'hbase'
+  group    'hbase'
+  mode      0755
+  recursive true
 end
 
-template '/etc/hadoop/conf/hdfs-site.xml' do
-  action :create
-  source 'hdfs-site.xml.erb'
-end
+chef_conf_dir = "/etc/hbase/#{node['hbase']['conf_dir']}"
 
-template '/etc/hbase/conf/hbase-site.xml' do
-  action :create
-  source 'hbase-site.xml.erb'
-  variables :hbase => node[:hbase]
-end
-
-template '/etc/hbase/conf/hbase-env.sh' do
-  action :create
+template "#{chef_conf_dir}/hbase-env.sh" do
   source 'hbase-env.sh.erb'
+  notifies :restart, 'service[hbase-master]'
+end
+
+template "#{chef_conf_dir}/hbase-site.xml" do
+  source 'hbase-site.xml.erb'
+  notifies :restart, 'service[hbase-master]'
+end
+
+execute 'update_hbase_conf_alternatives' do
+  command <<-EOC
+    update-alternatives --install \
+      /etc/hbase/conf hbase-conf #{chef_conf_dir}" 60
+  EOC
 end
 
 service 'hbase-master' do
