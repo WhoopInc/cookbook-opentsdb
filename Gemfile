@@ -1,22 +1,22 @@
 source 'https://rubygems.org'
 
 group :lint do
-  gem 'foodcritic', '~> 3.0'
-  gem 'rubocop',    '~> 0.19'
+  gem 'foodcritic', '~> 3.0.3'
+  gem 'rubocop',    '~> 0.22.0'
 end
 
 group :unit do
-  gem 'berkshelf', '~> 3.0.0.beta7'
+  gem 'berkshelf', '~> 3.1.2'
   gem 'chefspec',  '~> 3.4.0'
-  gem 'rspec-xml', :github => 'benesch/rspec-xml', :branch => 'matcher-description'
+  gem 'rspec-xml', '~> 0.0.6'
 end
 
 group :kitchen_common do
-  gem 'test-kitchen', '~> 1.2'
+  gem 'test-kitchen', '~> 1.2.1'
 end
 
 group :kitchen_vagrant do
-  gem 'kitchen-vagrant', '~> 0.11'
+  gem 'kitchen-vagrant', '~> 0.15'
 end
 
 group :development do

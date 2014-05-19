@@ -6,3 +6,5 @@ MethodLength:
   Max: 50
 RegexpLiteral:
   MaxSlashes: 0
+SingleSpaceBeforeFirstArg:
+  Enabled: false
