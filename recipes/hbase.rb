@@ -1,3 +1,5 @@
+require 'shellwords'
+
 include_recipe 'opentsdb::java'
 
 distro = node['lsb']['codename']
@@ -42,6 +44,11 @@ end
 
 chef_conf_dir = "/etc/hbase/#{node['hbase']['conf_dir']}"
 
+directory chef_conf_dir do
+  mode      0755
+  recursive true
+end
+
 template '/etc/default/hbase' do
   source 'hbase-defaults.erb'
   notifies :restart, 'service[hbase-master]'
@@ -53,10 +60,7 @@ template "#{chef_conf_dir}/hbase-site.xml" do
 end
 
 execute 'update_hbase_conf_alternatives' do
-  command <<-EOC
-    update-alternatives --install \
-      /etc/hbase/conf hbase-conf #{chef_conf_dir}" 60
-  EOC
+  command "update-alternatives --install /etc/hbase/conf hbase-conf #{chef_conf_dir.shellescape} 60"
 end
 
 service 'hbase-master' do

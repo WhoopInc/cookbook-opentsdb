@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'opentsdb::hbase' do
   let(:chef_run) do
     ChefSpec::Runner.new do |node|
-      node.set['hbase']['conf_dir'] = 'conf.benesch'
+      node.set['hbase']['conf_dir'] = 'conf benesch'
       node.set['hbase']['root_dir'] = '/i/love/fun'
     end.converge(described_recipe)
   end
@@ -39,7 +39,7 @@ describe 'opentsdb::hbase' do
     end
 
     it 'configures hbase to verify lzo compression is working' do
-      expect(chef_run).to render_file('/etc/hbase/conf.benesch/hbase-site.xml').with_content(
+      expect(chef_run).to render_file('/etc/hbase/conf benesch/hbase-site.xml').with_content(
         have_xpath("/configuration/property[name='hbase.regionserver.codecs' and value='lzo']")
       )
     end
@@ -78,12 +78,16 @@ describe 'opentsdb::hbase' do
       .with_content(/ulimit -u 12345/)
   end
 
-  it 'creates the directory' do
+  it 'creates the conf directory' do
+    expect(chef_run).to create_directory('/etc/hbase/conf benesch')
+  end
+
+  it 'creates the root directory' do
     expect(chef_run).to create_directory('/i/love/fun')
   end
 
   it 'configures hbase.rootdir to point to the directory' do
-    expect(chef_run).to render_file('/etc/hbase/conf.benesch/hbase-site.xml').with_content(
+    expect(chef_run).to render_file('/etc/hbase/conf benesch/hbase-site.xml').with_content(
       have_xpath("/configuration/property[name='hbase.rootdir' and value='file:///i/love/fun']")
     )
   end
@@ -98,16 +102,18 @@ describe 'opentsdb::hbase' do
   end
 
   it 'creates hbase-site.xml' do
-    expect(chef_run).to create_template('/etc/hbase/conf.benesch/hbase-site.xml')
+    expect(chef_run).to create_template('/etc/hbase/conf benesch/hbase-site.xml')
   end
 
   it 'restarts hbase-master when hbase-site.xml changes' do
-    resource = chef_run.template('/etc/hbase/conf.benesch/hbase-site.xml')
-    expect(resource).to notify('service[hbase-master]')
+    resource = chef_run.template('/etc/hbase/conf benesch/hbase-site.xml')
+    expect(resource).to notify('service[hbase-master]').to(:restart)
   end
 
   it 'updates alternatives' do
-    expect(chef_run).to run_execute('update_hbase_conf_alternatives')
+    expect(chef_run).to run_execute('update_hbase_conf_alternatives').with(
+      :command => 'update-alternatives --install /etc/hbase/conf hbase-conf /etc/hbase/conf\ benesch 60')
+  end
   end
 
   it 'starts the hbase-master service' do

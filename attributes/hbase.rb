@@ -1,5 +1,5 @@
 node.default['hbase']['conf_dir'] = 'conf.chef'
-node.default['hbase']['root_dir'] = '/var/lib/hbase/'
+node.default['hbase']['root_dir'] = '/var/lib/hbase'
 
 node.default['hbase']['lzo_compression'] = true
 
