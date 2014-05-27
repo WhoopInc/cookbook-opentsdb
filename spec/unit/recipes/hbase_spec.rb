@@ -8,6 +8,10 @@ describe 'opentsdb::hbase' do
     end.converge(described_recipe)
   end
 
+  it 'installs java' do
+    expect(chef_run).to include_recipe('opentsdb::java')
+  end
+
   it 'installs hbase' do
     expect(chef_run).to install_package('hbase')
   end
