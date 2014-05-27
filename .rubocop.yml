@@ -1,3 +1,5 @@
+Documentation:
+  Enabled: false
 HashSyntax:
   EnforcedStyle: hash_rockets
 LineLength:
@@ -6,5 +8,7 @@ MethodLength:
   Max: 50
 RegexpLiteral:
   MaxSlashes: 0
+RescueModifier:
+  Enabled: false
 SingleSpaceBeforeFirstArg:
   Enabled: false
