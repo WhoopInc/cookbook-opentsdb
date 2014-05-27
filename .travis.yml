@@ -6,6 +6,8 @@ rvm:
 before_install:
   - echo -n $AWS_KEY_CHUNK_{0..30} >> ~/.ssh/ci.pem.base64
   - cat ~/.ssh/ci.pem.base64 | tr -d ' ' | base64 --decode > ~/.ssh/ci.pem
+after_script:
+  - bundle exec kitchen destroy
 env:
   global:
   - KITCHEN_LOCAL_YAML="$TRAVIS_BUILD_DIR/.kitchen.cloud.yml"
