@@ -27,7 +27,7 @@ desc 'Run Test Kitchen integration tests'
 task :kitchen do
   # Test Kitchen's built-in rake tasks ignore environment variables, so shell
   # out to the CLI.
-  sh 'kitchen test'
+  sh 'kitchen test --log-level debug'
 end
 
 # Default
