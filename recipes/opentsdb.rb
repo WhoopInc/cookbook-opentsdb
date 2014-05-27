@@ -2,36 +2,46 @@ include_recipe 'opentsdb::java'
 
 package 'gnuplot'
 
-cookbook_file 'opentsdb-2.0.0.deb' do
-  action :create
-  path '/tmp/opentsdb.deb'
+package_path = "#{Chef::Config['file_cache_path']}/opentsdb.deb"
+
+remote_file 'opentsdb_package' do
+  backup   false
+  checksum node['opentsdb']['package_checksum']
+  path     package_path
+  source   node['opentsdb']['package_url']
 end
 
 dpkg_package 'opentsdb' do
-  action :install
-  version '2.0.0-rc1'
-  source '/tmp/opentsdb.deb'
+  source package_path
 end
 
-template '/etc/opentsdb/opentsdb.conf' do
-  action :create
-  source 'opentsdb.conf.erb'
-end
-
-user 'opentsdb' do
-  action :manage
-  shell '/bin/bash'
-end
-
-link '/usr/local/bin/tsdb' do
+link '/usr/bin/tsdb' do
   to '/usr/share/opentsdb/bin/tsdb'
 end
 
-execute 'sh /usr/share/opentsdb/bin/create_table.sh' do
-  # TODO: add not_if
+chef_gem 'java-properties' do
+  version '0.0.2'
+end
+
+require 'java-properties'
+
+template '/etc/opentsdb/opentsdb.conf' do
+  helpers(JavaPropertiesHelper)
+  source 'opentsdb.conf.erb'
+  notifies :restart, 'service[opentsdb]'
 end
 
 service 'opentsdb' do
-  action :start
+  action [:enable, :start]
   supports :status => true, :restart => true
+end
+
+execute 'create_opentsdb_tables' do
+  command 'sh /usr/share/opentsdb/tools/create_table.sh'
+  creates "#{node['hbase']['root_dir']}/tsdb"
+  env(
+    'HBASE_HOME' => '/usr/lib/hbase',
+    'COMPRESSION' => node['opentsdb']['compression'])
+  timeout 60
+  only_if { node['opentsdb']['create_tables'] }
 end
