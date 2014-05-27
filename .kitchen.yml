@@ -12,6 +12,8 @@ provisioner:
     file_cache_path: /var/chef/cache
 
 platforms:
+  - name: debian-6.0.8
+  - name: ubuntu-10.04
   - name: ubuntu-12.04
 
 suites:
