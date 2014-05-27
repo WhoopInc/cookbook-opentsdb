@@ -67,15 +67,15 @@ describe 'opentsdb::hbase' do
   it 'sets the nofile limit for the hbase process' do
     chef_run.node.set['hbase']['nofile'] = 12_345
     chef_run.converge(described_recipe)
-    expect(chef_run).to render_file('/etc/hbase/conf.benesch/hbase-env.sh')
-      .with_content(/^ulimit -n 12345$/)
+    expect(chef_run).to render_file('/etc/default/hbase')
+      .with_content(/ulimit -n 12345/)
   end
 
   it 'sets the nproc limit for the hbase process' do
     chef_run.node.set['hbase']['nproc'] = 12_345
     chef_run.converge(described_recipe)
-    expect(chef_run).to render_file('/etc/hbase/conf.benesch/hbase-env.sh')
-      .with_content(/^ulimit -u 12345$/)
+    expect(chef_run).to render_file('/etc/default/hbase')
+      .with_content(/ulimit -u 12345/)
   end
 
   it 'creates the directory' do
@@ -88,13 +88,13 @@ describe 'opentsdb::hbase' do
     )
   end
 
-  it 'creates hbase-env.sh' do
-    expect(chef_run).to create_template('/etc/hbase/conf.benesch/hbase-env.sh')
+  it 'creates /etc/default/hbase' do
+    expect(chef_run).to create_template('/etc/default/hbase')
   end
 
-  it 'restarts hbase-master when hbase-env.sh changes' do
-    resource = chef_run.template('/etc/hbase/conf.benesch/hbase-env.sh')
-    expect(resource).to notify('service[hbase-master]')
+  it 'restarts hbase-master when /etc/default/hbase changes' do
+    resource = chef_run.template('/etc/default/hbase')
+    expect(resource).to notify('service[hbase-master]').to(:restart)
   end
 
   it 'creates hbase-site.xml' do

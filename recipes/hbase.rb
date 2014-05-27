@@ -42,8 +42,8 @@ end
 
 chef_conf_dir = "/etc/hbase/#{node['hbase']['conf_dir']}"
 
-template "#{chef_conf_dir}/hbase-env.sh" do
-  source 'hbase-env.sh.erb'
+template '/etc/default/hbase' do
+  source 'hbase-defaults.erb'
   notifies :restart, 'service[hbase-master]'
 end
 
