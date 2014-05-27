@@ -114,6 +114,9 @@ describe 'opentsdb::hbase' do
     expect(chef_run).to run_execute('update_hbase_conf_alternatives').with(
       :command => 'update-alternatives --install /etc/hbase/conf hbase-conf /etc/hbase/conf\ benesch 60')
   end
+
+  it 'enables the hbase-master service' do
+    expect(chef_run).to enable_service('hbase-master')
   end
 
   it 'starts the hbase-master service' do

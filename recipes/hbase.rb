@@ -64,6 +64,6 @@ execute 'update_hbase_conf_alternatives' do
 end
 
 service 'hbase-master' do
-  action :start
+  action [:enable, :start]
   supports :status => true, :restart => true
 end
