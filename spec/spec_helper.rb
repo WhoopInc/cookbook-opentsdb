@@ -2,6 +2,8 @@ require 'chefspec'
 require 'chefspec/berkshelf'
 require 'rspec-xml'
 
+Dir['libraries/*.rb'].each { |f| require File.expand_path(f) }
+
 ChefSpec::Coverage.start!
 
 RSpec.configure do |config|

@@ -20,6 +20,7 @@ group :kitchen_vagrant do
 end
 
 group :development do
+  gem 'java-properties'
   gem 'ruby_gntp'
   gem 'growl'
   gem 'rb-fsevent'
