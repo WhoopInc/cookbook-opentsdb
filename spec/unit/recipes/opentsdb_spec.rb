@@ -12,7 +12,7 @@ describe 'opentsdb::opentsdb' do
   end
 
   it 'installs java' do
-    expect(chef_run).to include_recipe('opentsdb::java')
+    expect(chef_run).to include_recipe('java::default')
   end
 
   it 'installs gnuplot' do

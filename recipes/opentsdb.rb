@@ -1,4 +1,4 @@
-include_recipe 'opentsdb::java'
+include_recipe 'java::default'
 
 package 'gnuplot'
 

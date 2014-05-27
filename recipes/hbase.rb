@@ -1,6 +1,6 @@
 require 'shellwords'
 
-include_recipe 'opentsdb::java'
+include_recipe 'java::default'
 
 distro = node['lsb']['codename']
 
