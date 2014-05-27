@@ -8,3 +8,15 @@ driver:
   security_group_ids: sg-14f45171
   ssh_key: ~/.ssh/ci.pem
   subnet_id: subnet-37918843
+
+platforms:
+  - name: debian-6.0.9
+    driver:
+      image_id: ami-fc264bcc
+      username: admin
+  - name: ubuntu-10.04
+  - name: ubuntu-12.04
+
+provisioner:
+  # squeeze's certificate bundle can't verify Opscode's cert. Use HTTP for now
+  chef_omnibus_url: http://www.getchef.com/chef/install.sh
