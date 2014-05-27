@@ -1,7 +1,6 @@
+require 'foodcritic'
 require 'rspec/core/rake_task'
 require 'rubocop/rake_task'
-require 'foodcritic'
-require 'kitchen'
 
 # Style tests. Rubocop and Foodcritic.
 namespace :style do
@@ -24,15 +23,12 @@ desc 'Run ChefSpec examples'
 RSpec::Core::RakeTask.new(:spec)
 
 # Integration tests. Test Kitchen.
-namespace :integration do
-  desc 'Run Test Kitchen with Vagrant'
-  task :vagrant do
-    Kitchen.logger = Kitchen.default_file_logger
-    Kitchen::Config.new.instances.each do |instance|
-      instance.test(:always)
-    end
-  end
+desc 'Run Test Kitchen integration tests'
+task :kitchen do
+  # Test Kitchen's built-in rake tasks ignore environment variables, so shell
+  # out to the CLI.
+  sh 'kitchen test'
 end
 
 # Default
-task :default => ['style', 'spec', 'integration:vagrant']
+task :default => %w(style spec kitchen)

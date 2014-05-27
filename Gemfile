@@ -13,6 +13,7 @@ end
 
 group :kitchen_common do
   gem 'test-kitchen', '~> 1.2.1'
+  gem 'kitchen-ec2',  github: 'benesch/kitchen-ec2'
 end
 
 group :kitchen_vagrant do

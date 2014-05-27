@@ -1,0 +1,29 @@
+driver:
+  name: vagrant
+  network:
+  - - private_network
+    - type: dhcp
+
+provisioner:
+  name: chef_solo
+  solo_rb:
+    # Move Chef's file cache out of /tmp/kitchen, or vagrant-cachier will cause
+    # permissions issues.
+    file_cache_path: /var/chef/cache
+
+platforms:
+  - name: ubuntu-12.04
+
+suites:
+  - name: hbase
+    run_list:
+      - recipe[apt::default]
+      - recipe[opentsdb::hbase]
+    attributes:
+      hbase:
+        nofile: 12345
+        nproc: 7777
+  - name: default
+    run_list:
+      - recipe[apt::default]
+      - recipe[opentsdb::default]

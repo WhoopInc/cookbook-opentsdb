@@ -1,0 +1,10 @@
+---
+driver:
+  name: ec2
+  associate_public_ip: true
+  availability_zone: us-west-2a
+  aws_ssh_key_id: ci
+  region: us-west-2
+  security_group_ids: sg-14f45171
+  ssh_key: ~/.ssh/ci.pem
+  subnet_id: subnet-37918843
