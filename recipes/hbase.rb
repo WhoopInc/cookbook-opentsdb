@@ -78,3 +78,9 @@ service 'hbase-master' do
   action [:enable, :start]
   supports :status => true, :restart => true
 end
+
+# The hbase-master service init scripts deadlock if hbase is started and then
+# immediately restarted. Delay any restart notifications by at least 7 seconds.
+ruby_block 'delay_notifications' do
+  block { sleep 7 }
+end

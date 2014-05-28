@@ -126,4 +126,8 @@ describe 'opentsdb::hbase' do
   it 'starts the hbase-master service' do
     expect(chef_run).to start_service('hbase-master')
   end
+
+  it 'delays any notifications' do
+    expect(chef_run).to run_ruby_block('delay_notifications')
+  end
 end
