@@ -2,8 +2,18 @@ require 'shellwords'
 
 include_recipe 'java::default'
 
-distro = node['lsb']['codename']
 platform = node['platform']
+distro = node['lsb']['codename']
+
+unless distro
+  if platform?('debian') && node['platform_version'].start_with?('6.0')
+    # On Debian, Ohai requires the `lsb-release` package to pick up the
+    # codename. Since we only support squeeze, just hardcode it.
+    distro = 'squeeze'
+  else
+    Chef::Application.fatal!('Unable to detect LSB codename. Ensure LSB support packages are installed.')
+  end
+end
 
 apt_repository 'cloudera_cdh' do
   uri          "http://archive.cloudera.com/cdh4/#{platform}/#{distro}/amd64/cdh"
