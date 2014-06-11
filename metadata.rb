@@ -4,7 +4,7 @@ maintainer_email 'benesch@whoop.com'
 license          'All rights reserved'
 description      'Installs/Configures opentsdb'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '0.2.3'
+version          '0.2.4'
 
 supports 'debian', '= 6'
 supports 'ubuntu', '= 10.04'
