@@ -1,0 +1,11 @@
+DEPENDENCIES
+  opentsdb
+    path: .
+    metadata: true
+
+GRAPH
+  apt (2.3.8)
+  java (1.21.2)
+  opentsdb (0.2.3)
+    apt (~> 2.3.0)
+    java (~> 1.21.0)
