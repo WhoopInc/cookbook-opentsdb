@@ -1,13 +1,15 @@
 language: ruby
 cache: bundler
-bundler_args: --without kitchen_vagrant
+bundler_args: "--without kitchen_vagrant"
 rvm:
-  - 2.1.2
+- 2.1.2
 before_install:
-  - echo -n $AWS_KEY_CHUNK_{0..30} >> ~/.ssh/ci.pem.base64
-  - cat ~/.ssh/ci.pem.base64 | tr -d ' ' | base64 --decode > ~/.ssh/ci.pem
+- echo -n $AWS_KEY_CHUNK_{0..30} >> ~/.ssh/ci.pem.base64
+- cat ~/.ssh/ci.pem.base64 | tr -d ' ' | base64 --decode > ~/.ssh/ci.pem
 after_script:
-  - bundle exec kitchen destroy
+- bundle exec kitchen destroy
+before_deploy:
+- bundle exec berks package cookbook-opentsdb.tar.gz
 env:
   global:
   - KITCHEN_LOCAL_YAML="$TRAVIS_BUILD_DIR/.kitchen.cloud.yml"
@@ -39,3 +41,13 @@ env:
   - secure: TTOCdc2q/JVNf/bKnz4A7y5slnIJJ3Jzo/Dbam76VlIHtFbd4I6RgVKVbbeuufZYpop1C7ZWNMnimMaWpKLBggzo9IjMfMDjEb2xUe24JFkvWIyi1pVehgbRD1zIPlv6ahutIufFzH4xEdXdB2+Po00sxBCT1NueEIF9YBewUfU=
   - secure: IZqBDaxjxSfkKTSWiVx1JNGNDYao3TchwPcLMUX16GQ5yX/t9/X9NrJefxCkQRr+TBda5YKiQB0Le5p6scCQt/9R6kzRZmOMEdZR6X7zEn6qXQX0kIEb6VwXRQjLr9ZEomeuJJKR9mNtxp6E6tqpqcqsf2V1X3UUnduH8eQBG7k=
   - secure: dj6phbywPIMszJMUQvtDUg9GavZnmnnRqmPApRAe/HjfR4xHLZ0J95hFzeURMj2FIwy+rjOkIOC8S58sthf2HdLQUe/E+S1N+RYGJYcdbvQuqpyD/VgyEGcusmU6nyNkzrkmZCcqSThl319oF+eQw3T+RLch2/g69uiblccZvVk=
+deploy:
+  provider: releases
+  api_key:
+    secure: m3LklgplZeCU6WzkavpmbFyDpngG4XkydRgCE0NPdNjkmpTb2Ep+vnSBgGkQGe1pNj4VITQWZDWgDc3TKoNFWo/PmbiMAH4jENK+HXxlxrMsyA/PKhP9o4ilWpH9tGgPu9R9y4r9RjZZB+g3ojyr4wlzPVWbBs4TFD62blyXonc=
+  file: cookbook-opentsdb.tar.gz
+  skip_cleanup: true
+  on:
+    all_branches: true
+    tags: true
+    repo: WhoopInc/cookbook-opentsdb
