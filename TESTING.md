@@ -84,9 +84,7 @@ and add them to the `.travis.yml`.
 ```
 gem install travis
 travis encrypt AWS_ACCESS_KEY_ID='your_bits_here' --add
-travis encrypt AWS_SECRET_ACCESS_'your_bits_here' --add
-travis encrypt AWS_KEYPAIR_NAME='your_bits_here' --add
-travis encrypt AWS_SSH_KEY_PATH='~/.ssh/id_ci.pem' --add
+travis encrypt AWS_SECRET_ACCESS_KEY='your_bits_here' --add
 ```
 
 The second part is a little more complicated. Travis ENV variables are
