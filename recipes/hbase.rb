@@ -84,3 +84,14 @@ end
 ruby_block 'delay_notifications' do
   block { sleep 7 }
 end
+
+deploy_revision node['hbase']['utils_dir'] do
+  repo 'github.com:WhoopInc/hbase-utils'
+  action :deploy
+  branch 'master'
+  migrate false
+  purge_before_symlink       []
+  create_dirs_before_symlink []
+  symlink_before_migrate({})
+  symlinks({})
+end
