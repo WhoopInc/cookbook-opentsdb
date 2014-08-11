@@ -8,3 +8,5 @@ node.default['opentsdb']['config']['tsd.network.port'] = 4242
 node.default['opentsdb']['config']['tsd.http.cachedir'] = '/tmp/opentsdb'
 node.default['opentsdb']['config']['tsd.http.request.enable_chunked'] = true
 node.default['opentsdb']['config']['tsd.http.staticroot'] = '/usr/share/opentsdb/static'
+
+node.default['opentsdb']['create_tables_script'] = "#{node['hbase']['utils_dir']}/bin/TSDBTruncate"

@@ -37,7 +37,7 @@ service 'opentsdb' do
 end
 
 execute 'create_opentsdb_tables' do
-  command 'sh /usr/share/opentsdb/tools/create_table.sh'
+  code "#{node['opentsdb']['create_tables_script']} --default"
   creates "#{node['hbase']['root_dir']}/tsdb"
   env(
     'HBASE_HOME' => '/usr/lib/hbase',
