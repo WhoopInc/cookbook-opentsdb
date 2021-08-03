@@ -7,7 +7,7 @@ end
 
 group :unit do
   gem 'berkshelf', '~> 3.1.2'
-  gem 'chefspec',  '~> 3.4.0'
+  gem 'chefspec', '~> 4.1.0'
   gem 'rspec-xml', '~> 0.0.6'
 end
 
