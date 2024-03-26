@@ -1,3 +1,5 @@
+## Notice: This repository is no longer maintained as of 3/26/2024
+
 # cookbook-opentsdb
 
 <a href="https://travis-ci.org/WhoopInc/cookbook-opentsdb">
