@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 group :lint do
-  gem 'foodcritic', '~> 3.0.3'
+  gem 'foodcritic', '~> 4.0.0'
   gem 'rubocop',    '~> 0.22.0'
 end
 
@@ -27,7 +27,7 @@ group :development do
   gem 'rb-fsevent'
   gem 'guard', '~> 2.4'
   gem 'guard-kitchen'
-  gem 'guard-foodcritic'
+  gem 'guard-foodcritic', '>= 1.0.3'
   gem 'guard-rspec'
   gem 'guard-rubocop'
   gem 'rake'
